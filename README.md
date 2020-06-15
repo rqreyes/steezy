@@ -62,7 +62,7 @@ You can assume that you do not have to support legacy browsers. Feel free to use
 - React
 - Node (Express, preferred, but not required)
 - Any database of your choosing
-- Tests: Jest + react-testing-library / enzyme
+- Tests are a plus, but not required. 
 - CSSinJS is a plus: styled-components, styled-system, ...
 
 ## Instructions
@@ -71,7 +71,7 @@ You can assume that you do not have to support legacy browsers. Feel free to use
 - Build a performant, clean and well-structured solution.
 - Deploy the app using a service of your choice
 - Remember to have fun with it and try to commit as early and as often as possible!
-- When you're finished please download a ZIP of the project using the Github GUI and send us an email with the attachment to notify us.
+- When you're finished please send us instructions on how to access your service and download a ZIP of the project using the Github GUI and send us an email with the attachment to notify us.
 - Please provide instructions on how to run your application in the `How To Run` section below.
 
 We recommend taking no more than a day to complete this exercise. Best of luck and happy coding!
