@@ -41,10 +41,6 @@ As an authenticated user:
 CLASS PAGE
 As an authenticated user:
 - [ ] I want to navigate to the /classes/{ID} route for each class
-<<<<<<< HEAD
-=======
-- [ ] I want the class to begin playing when I arrive on the page
->>>>>>> ed3046d301f58d6f81f993f2669efdce501e9eb8
 - [ ] I want to play the video
 - [ ] I want to pause the video
 - [ ] I want to see a timestamp of how many seconds I have elapsed in the video
