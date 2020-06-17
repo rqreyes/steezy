@@ -41,6 +41,10 @@ As an authenticated user:
 CLASS PAGE
 As an authenticated user:
 - [ ] I want to navigate to the /classes/{ID} route for each class
+<<<<<<< HEAD
+=======
+- [ ] I want the class to begin playing when I arrive on the page
+>>>>>>> ed3046d301f58d6f81f993f2669efdce501e9eb8
 - [ ] I want to play the video
 - [ ] I want to pause the video
 - [ ] I want to see a timestamp of how many seconds I have elapsed in the video
@@ -55,7 +59,7 @@ As a user:
   - [ ] Case 1: User repeatedly watches the first 10% of the video and then closes the class player. The progress should only be 10%.
   - [ ] Case 2: User watches the first 15% of the video. The user seeks to 10% timestamp and watches up to 25%. The user has only watched a total of 25% of the video. The total progress should be 25%.
   - [ ] Case 3: User watches the first 10% and the last 10% of the video. The user has watched a total of 20% of the video. The total progress should be 20%.
-- [ ] I want the application to track how much time the user actually spent on the video. This includes play time and pause time.
+- [ ] I want the application to track how much time the user actually spent on the video. This includes play time and pause time
 
 NAVIGATION HEADER
 As a user:
@@ -78,14 +82,14 @@ You can assume that you do not have to support legacy browsers. Feel free to use
 - React
 - Node (Express, preferred, but not required)
 - Any database of your choosing
-- Tests are a plus, but not required. 
+- Tests are a plus, but not required
 - CSSinJS is a plus: styled-components, styled-system, ...
 
 ## Instructions
 
 - Clone this repository.
 - Build a performant, clean and well-structured solution.
-- Deploy the app using a service of your choice
+- Deploy the app using a service of your choice.
 - Remember to have fun with it and try to commit as early and as often as possible!
 - When you're finished please send us instructions on how to access your service and download a ZIP of the project using the Github GUI and send us an email with the attachment to notify us.
 - Please provide instructions on how to run your application in the `How To Run` section below.
