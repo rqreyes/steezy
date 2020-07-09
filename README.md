@@ -6,7 +6,7 @@ Your task is to bring the next generation of dance education to users around the
 
 ## Product Requirements
 
-AUTHENTICATION
+AUTHENTICATION  
 As a user:
 - [ ] I want to navigate to the /signup route to sign up with an email and a password
   - [ ] I want my email to be unique to me when I sign up. If a user already has the email I specified I should return to the signup page with some indication of an error
@@ -15,7 +15,7 @@ As a user:
   - [ ] I want the login page to have a link to the /signup page if I do not already have an account
 - [ ] I want to be able to logout of my account
 
-CLASSES INDEX
+CLASSES INDEX  
 As an unauthenticated user:
 - [ ] I want to navigate to the /classes route to see what classes are available. (/classes will act as the homepage)
 - [ ] I want to see a login button indicating that I am not authenticated
@@ -38,7 +38,7 @@ As an authenticated user:
   when I am viewing or searching the available classes
   - [ ] I want the search functionality to mirror the unauthenticated user flow
 
-CLASS PAGE
+CLASS PAGE  
 As an authenticated user:
 - [ ] I want to navigate to the /classes/{ID} route for each class
 - [ ] I want to play the video
@@ -48,7 +48,7 @@ As an authenticated user:
 - [ ] I want to see a progress bar representing where I am in the video
 - [ ] I want to be able to seek to different parts of the video by clicking on the progress bar
 
-ANALYTICS
+ANALYTICS  
 As a user:
 - [ ] I want the application to track what timestamp I last left off in the class
 - [ ] I want the application to track what percentage of the class the user actually watched
@@ -57,7 +57,7 @@ As a user:
   - [ ] Case 3: User watches the first 10% and the last 10% of the video. The user has watched a total of 20% of the video. The total progress should be 20%.
 - [ ] I want the application to track how much time the user actually spent on the video. This includes play time and pause time
 
-NAVIGATION HEADER
+NAVIGATION HEADER  
 As a user:
 - [ ] I want to navigate back to the homepage (/classes) wherever I am on the app
 - [ ] I want to logout of the application
