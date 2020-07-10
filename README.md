@@ -90,7 +90,7 @@ You can assume that you do not have to support legacy browsers. Feel free to use
 - When you're finished please send us instructions on how to access your service and download a ZIP of the project using the Github GUI and send us an email with the attachment to notify us.
 - Please provide instructions on how to run your application in the `How To Run` section below.
 
-We recommend taking no more than a day to complete this exercise. Best of luck and happy coding!
+Best of luck and happy coding!
 
 ## How to Run  
 Please provide instructions on how to run your application here...
