@@ -8,8 +8,13 @@ const StyledHeader = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
   height: 60px;
-  border-bottom: 3px solid #ebefef;
+  background: #fff;
+  box-shadow: inset 0 -3px #ebefef;
+  position: fixed;
+  top: 0;
+  left: 0;
 
   > a,
   img {

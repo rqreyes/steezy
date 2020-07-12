@@ -4,11 +4,9 @@ import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
 import Login from './components/organisms/Login';
 import Classes from './components/organisms/Classes';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
   * {
     box-sizing: border-box;
   }
@@ -23,9 +21,48 @@ const GlobalStyle = createGlobalStyle`
     min-height: 100%;
   }
 
-  body {
+  body, input {
     font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #222;
+    background: #222;
+  }
+`;
+
+const StyledMainForm = styled.main`
+  width: 392px;
+  background: #fff;
+  padding: 24px 24px 10px 24px;
+  border-radius: 5px;
+
+  img {
+    display: block;
+    margin: 0 auto 20px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 30px;
+  }
+
+  p {
+    margin: 0 10px 0 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: #0a78fb;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 `;
 
@@ -35,20 +72,22 @@ const App = () => {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
-        <main>
-          <Switch>
-            <Route path='/login'>
+        <Switch>
+          <Route path='/login'>
+            <StyledMainForm>
               <Login />
-            </Route>
-            <Route path='/signup'>
+            </StyledMainForm>
+          </Route>
+          <Route path='/signup'>
+            <StyledMainForm>
               <SignUp />
-            </Route>
-            <Route path='/classes'>
-              <Classes />
-            </Route>
-            <Redirect from='/' to='/classes' />
-          </Switch>
-        </main>
+            </StyledMainForm>
+          </Route>
+          <Route path='/classes'>
+            <Classes />
+          </Route>
+          <Redirect from='/' to='/classes' />
+        </Switch>
       </BrowserRouter>
     </div>
   );

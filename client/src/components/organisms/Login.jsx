@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Input from '../atoms/Input';
+import Button from '../atoms/Button';
 import Error from '../atoms/Error';
+import LogoText from '../../images/logo-text.png';
+import styled from 'styled-components';
+
+const StyledP = styled.p`
+  text-align: center;
+  margin: 0;
+`;
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -29,29 +38,30 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <Fragment>
+      <img src={LogoText} alt='logo text' />
       {errorDisplay}
       <form onSubmit={userValidate}>
-        <input
+        <Input
           type='email'
           placeholder='Email Address'
           value={email}
           onChange={(evt) => setEmail(evt.target.value)}
           required
         />
-        <input
+        <Input
           type='password'
           placeholder='Password'
           value={password}
           onChange={(evt) => setPassword(evt.target.value)}
           required
         />
-        <input type='submit' value='Log In' />
+        <Button type='submit'>Log In</Button>
       </form>
-      <p>
+      <StyledP>
         Don't have an account? <Link to='/signup'>Sign Up</Link>
-      </p>
-    </div>
+      </StyledP>
+    </Fragment>
   );
 };
 
