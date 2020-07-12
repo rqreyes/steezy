@@ -4,7 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Error from '../atoms/Error';
 
-const LogIn = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -55,4 +55,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default Login;
