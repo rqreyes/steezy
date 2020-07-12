@@ -14,7 +14,9 @@ router.post('/', async (req, res) => {
 
     // check if email is registered or if password is a match
     const user = await User.findOne({ email: email });
-    const isMatch = await bcrypt.compare(password, user.password);
+    const isMatch = user
+      ? await bcrypt.compare(password, user.password)
+      : undefined;
     if (!user || !isMatch)
       return res.status(400).json({ msg: 'Credentials are invalid' });
 
