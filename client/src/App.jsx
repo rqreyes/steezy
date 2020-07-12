@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
 import Login from './components/organisms/Login';
 import Classes from './components/organisms/Classes';
 import styled, { createGlobalStyle } from 'styled-components';
+import UserContext from './contexts/UserContext';
+import axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -67,28 +69,51 @@ const StyledMainForm = styled.main`
 `;
 
 const App = () => {
+  const initialUserData = { token: '', user: {} };
+  const [userData, setUserData] = useState(initialUserData);
+  const clearUserData = () => setUserData(initialUserData);
+
+  useEffect(() => {
+    // check and verify if user is still logged in
+    const tokenVerify = async () => {
+      const token = localStorage.getItem('auth-token');
+
+      if (token) {
+        const tokenRes = await axios.post('/user/tokenverify', null, {
+          headers: { 'x-auth-token': token },
+        });
+
+        if (tokenRes.data) setUserData({ token, user: tokenRes.data });
+      }
+    };
+
+    tokenVerify();
+  }, []);
+
   return (
     <div className='App'>
       <GlobalStyle />
-      <BrowserRouter>
-        <Header />
-        <Switch>
-          <Route path='/login'>
-            <StyledMainForm>
-              <Login />
-            </StyledMainForm>
-          </Route>
-          <Route path='/signup'>
-            <StyledMainForm>
-              <SignUp />
-            </StyledMainForm>
-          </Route>
-          <Route path='/classes'>
-            <Classes />
-          </Route>
-          <Redirect from='/' to='/classes' />
-        </Switch>
-      </BrowserRouter>
+      <UserContext.Provider value={{ userData, setUserData, clearUserData }}>
+        <BrowserRouter>
+          <Header />
+          <Switch>
+            <Route path='/login'>
+              <StyledMainForm>
+                <Login />
+              </StyledMainForm>
+            </Route>
+            <Route path='/signup'>
+              <StyledMainForm>
+                <SignUp />
+              </StyledMainForm>
+            </Route>
+            <Route path='/classes'>
+              <Classes />
+            </Route>
+            <Redirect from='/' to='/classes' />
+          </Switch>
+        </BrowserRouter>
+      </UserContext.Provider>
     </div>
   );
 };

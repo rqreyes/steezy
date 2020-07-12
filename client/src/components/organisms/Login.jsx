@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react';
-import { useState } from 'react';
+import React, { useContext, useState, Fragment } from 'react';
+import UserContext from '../../contexts/UserContext';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Input from '../atoms/Input';
@@ -14,6 +14,7 @@ const StyledP = styled.p`
 `;
 
 const Login = () => {
+  const { setUserData } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -25,10 +26,16 @@ const Login = () => {
 
   const userValidate = async (evt) => {
     evt.preventDefault();
+
+    // validate the user login
     try {
-      // validate the user login
       const loginUser = { email, password };
-      const loginRes = await axios.post('/login', loginUser);
+      const loginRes = await axios.post('/user/login', loginUser);
+
+      setUserData({
+        token: loginRes.data.token,
+        user: loginRes.data.user,
+      });
 
       localStorage.setItem('auth-token', loginRes.data.token);
       history.push('/classes');

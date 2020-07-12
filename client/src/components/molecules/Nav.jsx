@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import UserContext from '../../contexts/UserContext';
 import Button from '../atoms/Button';
 import styled from 'styled-components';
 
@@ -25,7 +26,23 @@ const StyledLogin = styled(StyledButton)`
 `;
 
 const Nav = () => {
-  return (
+  const { userData, clearUserData } = useContext(UserContext);
+
+  const logout = () => {
+    clearUserData();
+    localStorage.removeItem('auth-token');
+  };
+
+  // display either logout or login buttons
+  const navDisplay = Object.keys(userData.user).length ? (
+    <StyledNav>
+      <Link to='/classes'>
+        <StyledLogin type='button' onClick={logout}>
+          Logout
+        </StyledLogin>
+      </Link>
+    </StyledNav>
+  ) : (
     <StyledNav>
       <Link to='/login'>
         <StyledLogin type='button'>Login</StyledLogin>
@@ -35,6 +52,8 @@ const Nav = () => {
       </Link>
     </StyledNav>
   );
+
+  return navDisplay;
 };
 
 export default Nav;
