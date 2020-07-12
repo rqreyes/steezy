@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
-import Login from './components/organisms/Login';
+import LogIn from './components/organisms/LogIn';
 import Classes from './components/organisms/Classes';
 import './App.css';
 
@@ -16,7 +16,7 @@ const App = () => {
             <SignUp />
           </Route>
           <Route path='/login'>
-            <Login />
+            <LogIn />
           </Route>
           <Route path='/classes'>
             <Classes />
