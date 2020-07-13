@@ -6,6 +6,13 @@ import Input from '../atoms/Input';
 import Button from '../atoms/Button';
 import Error from '../atoms/Error';
 import LogoText from '../../images/logo-text.png';
+import styled from 'styled-components';
+
+const StyledP = styled.p`
+  && {
+    margin-top: 30px;
+  }
+`;
 
 const Login = () => {
   const { setUserData } = useContext(UserContext);
@@ -41,7 +48,6 @@ const Login = () => {
   return (
     <Fragment>
       <img src={LogoText} alt='logo text' />
-      {errorDisplay}
       <form onSubmit={userValidate}>
         <Input
           type='email'
@@ -49,6 +55,7 @@ const Login = () => {
           value={email}
           onChange={(evt) => setEmail(evt.target.value)}
           required
+          error={error}
         />
         <Input
           type='password'
@@ -56,12 +63,14 @@ const Login = () => {
           value={password}
           onChange={(evt) => setPassword(evt.target.value)}
           required
+          error={error}
         />
         <Button type='submit'>Log In</Button>
       </form>
-      <p>
+      {errorDisplay}
+      <StyledP>
         Don't have an account? <Link to='/signup'>Sign Up</Link>
-      </p>
+      </StyledP>
     </Fragment>
   );
 };

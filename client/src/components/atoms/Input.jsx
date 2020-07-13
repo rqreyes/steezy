@@ -6,10 +6,16 @@ const StyledInput = styled.input`
   border-radius: 4px;
   padding: 9px 14px;
   margin-bottom: 14px;
+
+  &.error {
+    border-color: rgb(235, 90, 70);
+  }
 `;
 
-const Button = ({ ...props }) => {
-  return <StyledInput {...props} />;
+const Button = ({ error, ...props }) => {
+  const inputClass = error ? 'error' : '';
+
+  return <StyledInput className={inputClass} {...props} />;
 };
 
 export default Button;

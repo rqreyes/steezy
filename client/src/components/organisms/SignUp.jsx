@@ -41,7 +41,6 @@ const SignUp = () => {
   return (
     <Fragment>
       <img src={LogoText} alt='logo text' />
-      {errorDisplay}
       <form onSubmit={userValidate}>
         <Input
           type='email'
@@ -49,6 +48,7 @@ const SignUp = () => {
           value={email}
           onChange={(evt) => setEmail(evt.target.value)}
           required
+          error={error}
         />
         <Input
           type='password'
@@ -58,7 +58,8 @@ const SignUp = () => {
           required
         />
         <Button type='submit'>Create Account</Button>
-      </form>{' '}
+      </form>
+      {errorDisplay}
     </Fragment>
   );
 };

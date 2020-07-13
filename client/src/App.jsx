@@ -56,10 +56,6 @@ const StyledSignUp = styled.main`
   p {
     text-align: center;
     margin: 0;
-
-    &.error {
-      margin-right: 10px;
-    }
   }
 
   a {
@@ -74,10 +70,6 @@ const StyledSignUp = styled.main`
 
 const StyledLogin = styled(StyledSignUp)`
   padding-bottom: 10px;
-
-  form {
-    margin-bottom: 30px;
-  }
 `;
 
 const App = () => {
