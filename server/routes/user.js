@@ -24,13 +24,21 @@ router.post('/signup', async (req, res) => {
     const passwordHash = await bcrypt.hash(password, salt);
 
     // save user into database
-    const userNew = new User({
+    const user = new User({
       email,
       password: passwordHash,
     });
+    await user.save();
 
-    await userNew.save();
-    res.json({ msg: 'Sign up successful' });
+    // generate JWT for user
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+      },
+    });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

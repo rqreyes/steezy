@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import UserContext from './contexts/UserContext';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import axios from 'axios';
 import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
 import Login from './components/organisms/Login';
 import Classes from './components/organisms/Classes';
 import styled, { createGlobalStyle } from 'styled-components';
-import UserContext from './contexts/UserContext';
-import axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -37,10 +37,10 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-const StyledMainForm = styled.main`
+const StyledSignUp = styled.main`
   width: 392px;
   background: #fff;
-  padding: 24px 24px 10px 24px;
+  padding: 24px;
   border-radius: 5px;
 
   img {
@@ -51,11 +51,15 @@ const StyledMainForm = styled.main`
   form {
     display: flex;
     flex-direction: column;
-    margin: 0 auto 30px;
   }
 
   p {
-    margin: 0 10px 0 0;
+    text-align: center;
+    margin: 0;
+
+    &.error {
+      margin-right: 10px;
+    }
   }
 
   a {
@@ -65,6 +69,14 @@ const StyledMainForm = styled.main`
     &:hover {
       text-decoration: underline;
     }
+  }
+`;
+
+const StyledLogin = styled(StyledSignUp)`
+  padding-bottom: 10px;
+
+  form {
+    margin-bottom: 30px;
   }
 `;
 
@@ -97,15 +109,15 @@ const App = () => {
         <BrowserRouter>
           <Header />
           <Switch>
-            <Route path='/login'>
-              <StyledMainForm>
-                <Login />
-              </StyledMainForm>
-            </Route>
             <Route path='/signup'>
-              <StyledMainForm>
+              <StyledSignUp>
                 <SignUp />
-              </StyledMainForm>
+              </StyledSignUp>
+            </Route>
+            <Route path='/login'>
+              <StyledLogin>
+                <Login />
+              </StyledLogin>
             </Route>
             <Route path='/classes'>
               <Classes />

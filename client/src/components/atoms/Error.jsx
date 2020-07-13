@@ -1,18 +1,17 @@
 import React from 'react';
 import Button from './Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
 const StyledError = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
   color: firebrick;
   margin-bottom: 10px;
 
   p {
-    margin-right: 10px;
+    margin-right: 4px;
   }
 `;
 
@@ -32,9 +31,9 @@ const StyledButton = styled(Button)`
 const Error = ({ error, setError }) => {
   return (
     <StyledError>
-      <p>{error}</p>
+      <p className='error'>{error}</p>
       <StyledButton onClick={() => setError('')}>
-        <FontAwesomeIcon icon={faMinusCircle} />
+        <FontAwesomeIcon icon={faTimes} />
       </StyledButton>
     </StyledError>
   );
