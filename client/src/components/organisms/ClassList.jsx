@@ -12,6 +12,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
+const StyledClassesHeader = styled.section`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+`;
+
+const StyledH2 = styled.h2`
+  margin-right: 40px;
+`;
+
 const StyledSlider1 = styled.section`
   .slick-track {
     display: flex;
@@ -198,10 +209,10 @@ const ClassList = () => {
 
   return (
     <main>
-      <section>
-        <h2>Classes</h2>
+      <StyledClassesHeader>
+        <StyledH2>Classes</StyledH2>
         <Search searchClassList={searchClassList} />
-      </section>
+      </StyledClassesHeader>
       {classListDisplay}
     </main>
   );

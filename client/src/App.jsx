@@ -38,8 +38,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   main {
-    max-width: 1200px;
-    margin: 60px auto 0;
+    width: 100%;
+    max-width: 80vw;
+    margin: 100px auto 0;
   }
 
   ul {
@@ -50,6 +51,10 @@ const GlobalStyle = createGlobalStyle`
 
   h1, h2, h3 {
     margin: 0;
+  }
+
+  h2 {
+    font-size: 30px;
   }
 `;
 

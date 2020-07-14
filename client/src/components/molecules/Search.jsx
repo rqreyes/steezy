@@ -4,9 +4,37 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
 
+const StyledForm = styled.form`
+  display: flex;
+  width: 100%;
+  max-width: 512px;
+`;
+
+const StyledInput = styled(Input)`
+  background: #ebefee;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 0;
+  border-radius: 4px 0 0 4px;
+  margin-bottom: 0;
+`;
+
 const StyledButton = styled.button`
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 31px;
   color: #fff;
   background: #222;
+  border: 0;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+
+  svg {
+    width: 18px !important;
+    height: 18px;
+  }
 `;
 
 const Search = ({ searchClassList }) => {
@@ -19,8 +47,8 @@ const Search = ({ searchClassList }) => {
   };
 
   return (
-    <form onSubmit={searchClass}>
-      <Input
+    <StyledForm onSubmit={searchClass}>
+      <StyledInput
         type='text'
         value={search}
         onChange={(evt) => setSearch(evt.target.value)}
@@ -29,7 +57,7 @@ const Search = ({ searchClassList }) => {
       <StyledButton type='submit'>
         <FontAwesomeIcon icon={faSearch} />
       </StyledButton>
-    </form>
+    </StyledForm>
   );
 };
 
