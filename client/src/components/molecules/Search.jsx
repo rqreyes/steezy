@@ -35,8 +35,7 @@ const StyledButton = styled.button`
   }
 
   svg {
-    width: 18px !important;
-    height: 18px;
+    font-size: 18px !important;
   }
 `;
 

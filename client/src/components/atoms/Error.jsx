@@ -18,14 +18,11 @@ const StyledError = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  width: 20px;
-  height: 20px;
   background: none;
   padding: 0;
 
   svg {
-    width: 20px !important;
-    height: 20px;
+    font-size: 18px;
     color: rgb(235, 90, 70);
   }
 `;
