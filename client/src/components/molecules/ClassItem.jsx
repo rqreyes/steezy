@@ -1,10 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const StyledFigure = styled.figure`
+const StyledLink = styled(Link)`
   flex: 1;
   margin: 12px;
+`;
+
+const StyledFigure = styled.figure`
+  height: 100%;
   position: relative;
+  margin: 0;
 
   &::before {
     content: '';
@@ -48,26 +54,28 @@ const StyledP = styled.p`
 
 const ClassItem = ({ classItem }) => {
   return (
-    <StyledFigure>
-      <StyledImg
-        src={require(`../../images/${classItem.thumbnailSlug}`)}
-        alt='class thumbnail'
-      />
-      <StyledFigcaption>
-        <StyledH3>{classItem.title}</StyledH3>
-        <div>
-          <StyledP>
-            Instructor: <strong>{classItem.instructor}</strong>
-          </StyledP>
-          <StyledP>
-            Level: <strong>{classItem.level}</strong>
-          </StyledP>
-          <StyledP>
-            Song: <strong>{classItem.songs}</strong>
-          </StyledP>
-        </div>
-      </StyledFigcaption>
-    </StyledFigure>
+    <StyledLink to={`/classes/${classItem._id}`}>
+      <StyledFigure>
+        <StyledImg
+          src={require(`../../images/${classItem.thumbnailSlug}`)}
+          alt='class thumbnail'
+        />
+        <StyledFigcaption>
+          <StyledH3>{classItem.title}</StyledH3>
+          <div>
+            <StyledP>
+              Instructor: <strong>{classItem.instructor}</strong>
+            </StyledP>
+            <StyledP>
+              Level: <strong>{classItem.level}</strong>
+            </StyledP>
+            <StyledP>
+              Song: <strong>{classItem.songs}</strong>
+            </StyledP>
+          </div>
+        </StyledFigcaption>
+      </StyledFigure>
+    </StyledLink>
   );
 };
 

@@ -6,6 +6,7 @@ import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
 import Login from './components/organisms/Login';
 import ClassList from './components/organisms/ClassList';
+import ClassVideo from './components/organisms/ClassVideo';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -40,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
   main {
     width: 100%;
     max-width: 80vw;
-    margin: 80px auto 0;
+    margin: 100px auto 0;
   }
 
   ul {
@@ -129,6 +130,9 @@ const App = () => {
               <StyledLogin>
                 <Login />
               </StyledLogin>
+            </Route>
+            <Route path='/classes/:id'>
+              <ClassVideo />
             </Route>
             <Route path='/classes'>
               <ClassList />
