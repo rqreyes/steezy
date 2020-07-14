@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Search from '../molecules/Search';
 import ClassItem from '../molecules/ClassItem';
+import Loading from '../atoms/Loading';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
@@ -21,6 +22,11 @@ const StyledClassesHeader = styled.section`
 
 const StyledH2 = styled.h2`
   margin-right: 40px;
+`;
+
+const StyledNotResults = styled.div`
+  text-align: center;
+  margin-top: 20vh;
 `;
 
 const StyledSlider1 = styled.section`
@@ -155,9 +161,13 @@ const ClassList = () => {
 
   const classListDisplay =
     classList.noResults === true ? (
-      <div>No results were found</div>
+      <StyledNotResults>
+        <p>No results were found</p>
+      </StyledNotResults>
     ) : classList.classes.length === 0 ? (
-      <p>loading</p>
+      <StyledNotResults>
+        <Loading />
+      </StyledNotResults>
     ) : (
       <Fragment>
         <StyledSlider1>
