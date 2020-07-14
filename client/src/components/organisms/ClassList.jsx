@@ -3,6 +3,7 @@ import axios from 'axios';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Search from '../molecules/Search';
 import ClassItem from '../molecules/ClassItem';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -29,8 +30,10 @@ const StyledSlider2 = styled.section`
   .slick-slider {
     display: flex;
     justify-content: center;
-    margin: auto;
-    width: 220px;
+  }
+
+  .slick-list {
+    width: 170px;
   }
 
   .slick-slide {
@@ -59,40 +62,62 @@ const StyledSlider2 = styled.section`
   }
 `;
 
-const StyledPrev = styled.button`
+const StyledArrow = styled.button`
   color: #b4b7b7;
   background: none;
   border: 0;
-  margin: 0 6px 0 0;
-`;
-
-const StyledNext = styled(StyledPrev)`
-  margin: 0 0 0 6px;
 `;
 
 const ClassList = () => {
-  const [classList, setClassList] = useState([]);
+  const [classList, setClassList] = useState({
+    classes: [],
+    infinite: false,
+    noResults: false,
+  });
   const [nav1, setNav1] = useState(null);
   const [nav2, setNav2] = useState(null);
 
   let slider1 = [];
   let slider2 = [];
 
+  // search class
+  const searchClassList = async (search) => {
+    try {
+      const searchRes = await axios.post('/class/search', { search });
+
+      if (searchRes.data.length === 0) {
+        setClassList({ ...classList, noResults: true });
+      } else {
+        // toggle infinite if number of classes is greater than 5 slides (45 classes)
+        setClassList({
+          classes: searchRes.data,
+          infinite:
+            searchRes.data >
+            settings1.rows * settings1.slidesPerRow * settings2.slidesToShow,
+          noResults: false,
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const PrevArrow = ({ onClick }) => (
-    <StyledPrev type='button' onClick={onClick}>
+    <StyledArrow type='button' onClick={onClick}>
       <FontAwesomeIcon icon={faChevronLeft} />
-    </StyledPrev>
+    </StyledArrow>
   );
 
   const NextArrow = ({ onClick }) => (
-    <StyledNext type='button' onClick={onClick}>
+    <StyledArrow type='button' onClick={onClick}>
       <FontAwesomeIcon icon={faChevronRight} />
-    </StyledNext>
+    </StyledArrow>
   );
 
   // configure slider settings
   const settings1 = {
     arrows: false,
+    infinite: classList.infinite,
     rows: 3,
     slidesPerRow: 3,
   };
@@ -101,6 +126,7 @@ const ClassList = () => {
     centerMode: true,
     centerPadding: '0',
     focusOnSelect: true,
+    infinite: classList.infinite,
     slidesToShow: 5,
     swipeToSlide: true,
     prevArrow: <PrevArrow />,
@@ -109,7 +135,7 @@ const ClassList = () => {
 
   // calculate number count
   const nav2Count = Math.ceil(
-    classList.length / (settings1.rows * settings1.slidesPerRow)
+    classList.classes.length / (settings1.rows * settings1.slidesPerRow)
   );
   const nav2CountDisplay = [];
   for (let i = 1; i <= nav2Count; i += 1) {
@@ -117,13 +143,12 @@ const ClassList = () => {
   }
 
   const classListDisplay =
-    classList.length === 0 ? (
+    classList.noResults === true ? (
+      <div>No results were found</div>
+    ) : classList.classes.length === 0 ? (
       <p>loading</p>
     ) : (
       <Fragment>
-        <section>
-          <h2>Classes</h2>
-        </section>
         <StyledSlider1>
           <Slider
             asNavFor={nav2}
@@ -132,7 +157,7 @@ const ClassList = () => {
             }}
             {...settings1}
           >
-            {classList.map((classItem) => (
+            {classList.classes.map((classItem) => (
               <ClassItem key={classItem._id} classItem={classItem} />
             ))}
           </Slider>
@@ -155,7 +180,11 @@ const ClassList = () => {
     // fetch classes
     (async () => {
       const classListRes = await axios.get('/class');
-      setClassList(classListRes.data);
+      setClassList({
+        classes: classListRes.data,
+        infinite: true,
+        noResults: false,
+      });
     })();
   }, []);
 
@@ -167,7 +196,15 @@ const ClassList = () => {
     }
   }, [slider1, slider2]);
 
-  return <main>{classListDisplay}</main>;
+  return (
+    <main>
+      <section>
+        <h2>Classes</h2>
+        <Search searchClassList={searchClassList} />
+      </section>
+      {classListDisplay}
+    </main>
+  );
 };
 
 export default ClassList;

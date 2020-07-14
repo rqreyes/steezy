@@ -1,7 +1,7 @@
 import React, { useContext, useState, Fragment } from 'react';
-import UserContext from '../../contexts/UserContext';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import UserContext from '../../contexts/UserContext';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
 import Error from '../atoms/Error';

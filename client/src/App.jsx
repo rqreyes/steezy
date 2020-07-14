@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import UserContext from './contexts/UserContext';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import UserContext from './contexts/UserContext';
 import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
 import Login from './components/organisms/Login';
