@@ -13,7 +13,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  html {
+  /* html {
     height: 100%;
   }
 
@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
   #root,
   .App {
     min-height: 100%;
-  }
+  } */
 
   body, input {
     font-family: 'Poppins', sans-serif;
@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
   main {
     width: 100%;
     max-width: 80vw;
-    margin: 100px auto 0;
+    margin: 80px auto 0;
   }
 
   ul {

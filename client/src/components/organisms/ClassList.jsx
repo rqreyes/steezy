@@ -30,6 +30,8 @@ const StyledNotResults = styled.div`
 `;
 
 const StyledSlider1 = styled.section`
+  margin-bottom: 16px;
+
   .slick-track {
     display: flex;
     align-items: center;
@@ -56,7 +58,9 @@ const StyledSlider2 = styled.section`
   .slick-slide {
     display: flex;
     justify-content: center;
+    cursor: pointer;
 
+    &:hover,
     &.slick-current {
       > div {
         color: #0a78fb;
@@ -83,6 +87,11 @@ const StyledArrow = styled.button`
   color: #b4b7b7;
   background: none;
   border: 0;
+  cursor: pointer;
+
+  &:hover {
+    color: #0a78fb;
+  }
 `;
 
 const ClassList = () => {

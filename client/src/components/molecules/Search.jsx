@@ -31,6 +31,10 @@ const StyledButton = styled.button`
   border-radius: 0 4px 4px 0;
   cursor: pointer;
 
+  &:hover {
+    background: #0a78fb;
+  }
+
   svg {
     width: 18px !important;
     height: 18px;
