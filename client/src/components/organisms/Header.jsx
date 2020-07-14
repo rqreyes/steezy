@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import Nav from '../molecules/Nav';
-import LogoIcon from '../../images/logo-icon.svg';
+import NavLeft from '../molecules/NavLeft';
+import NavRight from '../molecules/NavRight';
 import styled from 'styled-components';
 
 const StyledHeader = styled.header`
@@ -31,11 +30,8 @@ const StyledHeader = styled.header`
 const Header = () => {
   return (
     <StyledHeader>
-      <Link to='/'>
-        <h1>Steezy</h1>
-        <img src={LogoIcon} alt='logo icon' />
-      </Link>
-      <Nav />
+      <NavLeft />
+      <NavRight />
     </StyledHeader>
   );
 };
