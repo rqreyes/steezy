@@ -5,7 +5,7 @@ import axios from 'axios';
 import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
 import Login from './components/organisms/Login';
-import Classes from './components/organisms/Classes';
+import ClassList from './components/organisms/ClassList';
 import styled, { createGlobalStyle } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
@@ -29,11 +29,27 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    display: flex;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     color: #222;
-    background: #222;
+    /* background: #222; */
+    background: #fff;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 60px auto 0;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  h1, h2, h3 {
+    margin: 0;
   }
 `;
 
@@ -79,7 +95,7 @@ const App = () => {
 
   useEffect(() => {
     // check and verify if user is still logged in
-    const tokenVerify = async () => {
+    (async () => {
       const token = localStorage.getItem('auth-token');
 
       if (token) {
@@ -89,9 +105,7 @@ const App = () => {
 
         if (tokenRes.data) setUserData({ token, user: tokenRes.data });
       }
-    };
-
-    tokenVerify();
+    })();
   }, []);
 
   return (
@@ -112,7 +126,7 @@ const App = () => {
               </StyledLogin>
             </Route>
             <Route path='/classes'>
-              <Classes />
+              <ClassList />
             </Route>
             <Redirect from='/' to='/classes' />
           </Switch>
