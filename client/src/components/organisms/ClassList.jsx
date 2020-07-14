@@ -113,7 +113,7 @@ const ClassList = () => {
   );
   const nav2CountDisplay = [];
   for (let i = 1; i <= nav2Count; i += 1) {
-    nav2CountDisplay.push(<Fragment>{i}</Fragment>);
+    nav2CountDisplay.push(<Fragment key={i}>{i}</Fragment>);
   }
 
   const classListDisplay =
@@ -161,8 +161,10 @@ const ClassList = () => {
 
   useEffect(() => {
     // initialize sliders
-    setNav1(slider1);
-    setNav2(slider2);
+    if (slider1.length !== 0 && slider2.length !== 0) {
+      setNav1(slider1);
+      setNav2(slider2);
+    }
   }, [slider1, slider2]);
 
   return <main>{classListDisplay}</main>;
