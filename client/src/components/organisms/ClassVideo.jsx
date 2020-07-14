@@ -49,7 +49,6 @@ const StyledPlayPause = styled.button`
   background: none;
   border: 0;
   margin: 0 0 30px 30px;
-  cursor: pointer;
 
   svg {
     font-size: 30px;
@@ -126,7 +125,7 @@ const ClassVideo = () => {
           player1 = player;
         }}
         className='react-player'
-        url='https://www.youtube.com/watch?v=ysz5S6PUM-U'
+        url={`${history.location.state.videoUrl}`}
         width='100%'
         height='100%'
         playing={settings.playing}

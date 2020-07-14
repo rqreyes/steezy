@@ -58,7 +58,6 @@ const StyledSlider2 = styled.section`
   .slick-slide {
     display: flex;
     justify-content: center;
-    cursor: pointer;
 
     &:hover,
     &.slick-current {
@@ -87,7 +86,6 @@ const StyledArrow = styled.button`
   color: #b4b7b7;
   background: none;
   border: 0;
-  cursor: pointer;
 
   &:hover {
     color: #0a78fb;

@@ -10,7 +10,6 @@ const StyledButton = styled.button`
   padding: 16px 32px;
   border: 0;
   border-radius: 4px;
-  cursor: pointer;
 `;
 
 const Button = ({ children, ...props }) => {

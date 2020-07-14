@@ -57,6 +57,10 @@ const GlobalStyle = createGlobalStyle`
   h2 {
     font-size: 30px;
   }
+
+  a, button {
+    cursor: pointer;
+  }
 `;
 
 const StyledSignUp = styled.main`

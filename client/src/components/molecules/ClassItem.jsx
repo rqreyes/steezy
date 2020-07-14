@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-const StyledLink = styled(Link)`
+const StyledLink = styled.a`
   flex: 1;
   margin: 12px;
 `;
@@ -53,8 +53,14 @@ const StyledP = styled.p`
 `;
 
 const ClassItem = ({ classItem }) => {
+  const history = useHistory();
+
+  const handleClick = (id) => {
+    history.push(`/classes/${id}`, { ...classItem });
+  };
+
   return (
-    <StyledLink to={`/classes/${classItem._id}`}>
+    <StyledLink onClick={() => handleClick(classItem._id)}>
       <StyledFigure>
         <StyledImg
           src={require(`../../images/${classItem.thumbnailSlug}`)}
