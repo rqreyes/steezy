@@ -1,5 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import Slider from 'rc-slider';
@@ -56,7 +56,7 @@ const StyledPlayPause = styled.button`
 `;
 
 const ClassVideo = () => {
-  const { setUserData } = useContext(UserContext);
+  const { setUserData, updateUserClassData } = useContext(UserContext);
   const [settings, setSettings] = useState({
     playing: true,
     played: 0,
@@ -65,8 +65,9 @@ const ClassVideo = () => {
     duration: 0,
   });
   const [ranges, setRanges] = useState([]);
-  const [percentWatched, setPercentWatched] = useState(0);
+  const [time1, setTime1] = useState({});
   const history = useHistory();
+  const { id } = useParams();
   let player1 = [];
   const sliderRef = useRef();
 
@@ -119,7 +120,17 @@ const ClassVideo = () => {
       rangeCopy[rangeCopy.length - 1].push(Math.floor(settings.playedSeconds));
 
     setRanges(rangeCopy);
-    setPercentWatched(getPercentWatched(ranges));
+
+    // store class data into user context
+    const time2 = new Date();
+    const timeTotalWatched = Math.abs(time1 - time2);
+
+    updateUserClassData(id, {
+      percentWatched: getPercentWatched(ranges),
+      played: settings.played,
+      ranges,
+      timeTotalWatched,
+    });
   };
 
   const getPercentWatched = (ranges) => {
@@ -135,7 +146,7 @@ const ClassVideo = () => {
 
     return Math.round(
       (mergedRanges.reduce(
-        (totalSec, range) => (totalSec += range[1] - range[0]),
+        (totalSec, range) => (totalSec += Math.abs(range[0] - range[1])),
         0
       ) /
         settings.duration) *
@@ -149,8 +160,8 @@ const ClassVideo = () => {
     <FontAwesomeIcon icon={faPlay} />
   );
 
+  // check and verify if user is still logged in
   useEffect(() => {
-    // check and verify if user is still logged in
     (async () => {
       const token = localStorage.getItem('auth-token');
 
@@ -166,6 +177,12 @@ const ClassVideo = () => {
       }
     })();
   }, [setUserData, history]);
+
+  // initialize start time
+  useEffect(() => {
+    const timeStart = new Date();
+    setTime1(timeStart);
+  }, []);
 
   return (
     <StyledMain>

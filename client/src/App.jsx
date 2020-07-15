@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
+import _ from 'lodash';
 import UserContext from './contexts/UserContext';
 import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
@@ -101,10 +102,23 @@ const StyledLogin = styled(StyledSignUp)`
 const App = () => {
   const initialUserData = { token: '', user: {} };
   const [userData, setUserData] = useState(initialUserData);
+  const [userClassData, setUserClassData] = useState({});
   const clearUserData = () => setUserData(initialUserData);
 
+  // update the user class data
+  const updateUserClassData = (id, classData) => {
+    const userClassDataCopy = _.cloneDeep(userClassData);
+
+    userClassDataCopy[id] = Object.assign(
+      userClassDataCopy[id] || {},
+      classData
+    );
+
+    setUserClassData(userClassDataCopy);
+  };
+
+  // check and verify if user is still logged in
   useEffect(() => {
-    // check and verify if user is still logged in
     (async () => {
       const token = localStorage.getItem('auth-token');
 
@@ -121,7 +135,15 @@ const App = () => {
   return (
     <div className='App'>
       <GlobalStyle />
-      <UserContext.Provider value={{ userData, setUserData, clearUserData }}>
+      <UserContext.Provider
+        value={{
+          userData,
+          setUserData,
+          clearUserData,
+          userClassData,
+          updateUserClassData,
+        }}
+      >
         <BrowserRouter>
           <Header />
           <Switch>
