@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
@@ -64,19 +64,34 @@ const ClassVideo = () => {
     seeking: false,
     duration: 0,
   });
+  const [ranges, setRanges] = useState([]);
+  const [percentWatched, setPercentWatched] = useState(0);
   const history = useHistory();
   let player1 = [];
+  const sliderRef = useRef();
+
+  const handlePlay = () => {
+    handleRangeStart(sliderRef.current.state.value * settings.duration);
+    setSettings({ ...settings, playing: true });
+  };
+
+  const handlePause = () => {
+    handleRangeEnd();
+    setSettings({ ...settings, playing: false });
+  };
 
   const handlePlayPause = () => {
     setSettings({ ...settings, playing: !settings.playing });
   };
 
-  const handleSeekMouseDown = () => {
+  const handleSeekMouseDown = (value) => {
+    // if the video is playing while seeking, then end that range
+    if (settings.playing) handleRangeEnd(value * settings.duration);
     setSettings({ ...settings, seeking: true });
   };
 
   const handleSeekChange = (value) => {
-    setSettings({ ...settings, played: parseFloat(value) });
+    setSettings({ ...settings, played: parseFloat(value), seeking: true });
   };
 
   const handleSeekMouseUp = (value) => {
@@ -85,13 +100,47 @@ const ClassVideo = () => {
   };
 
   const handleProgress = (state) => {
-    if (!settings.seeking) {
-      setSettings({ ...settings, ...state });
-    }
+    if (!settings.seeking) setSettings({ ...settings, ...state });
   };
 
   const handleDuration = (duration) => {
     setSettings({ ...settings, duration });
+  };
+
+  const handleRangeStart = (playStart) => {
+    setRanges([...ranges, [Math.floor(playStart)]]);
+  };
+
+  const handleRangeEnd = (playEnd) => {
+    const rangeCopy = [...ranges];
+
+    if (playEnd) rangeCopy[rangeCopy.length - 1].push(Math.floor(playEnd));
+    else
+      rangeCopy[rangeCopy.length - 1].push(Math.floor(settings.playedSeconds));
+
+    setRanges(rangeCopy);
+    setPercentWatched(getPercentWatched(ranges));
+  };
+
+  const getPercentWatched = (ranges) => {
+    ranges.sort((a, b) => a[0] - b[0]);
+    const mergedRanges = [ranges[0]];
+
+    ranges.forEach((range) => {
+      const recent = mergedRanges[mergedRanges.length - 1];
+
+      if (range[0] <= recent[1]) recent[1] = Math.max(recent[1], range[1]);
+      else mergedRanges.push(range);
+    });
+
+    return Math.round(
+      (mergedRanges.reduce(
+        (totalSec, range) => (totalSec += range[1] - range[0]),
+        0
+      ) /
+        settings.duration) *
+        100
+    );
   };
 
   const playPauseDisplay = settings.playing ? (
@@ -129,6 +178,8 @@ const ClassVideo = () => {
         width='100%'
         height='100%'
         playing={settings.playing}
+        onPlay={handlePlay}
+        onPause={handlePause}
         onProgress={handleProgress}
         onDuration={handleDuration}
       />
@@ -139,6 +190,7 @@ const ClassVideo = () => {
             textAlign={'right'}
           />
           <Slider
+            ref={sliderRef}
             min={0}
             max={1}
             step={0.001}

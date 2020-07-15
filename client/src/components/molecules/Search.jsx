@@ -42,7 +42,7 @@ const StyledButton = styled.button`
 const Search = ({ searchClassList }) => {
   const [search, setSearch] = useState('');
 
-  const searchClass = async (evt) => {
+  const searchClass = (evt) => {
     evt.preventDefault();
     searchClassList(search);
     setSearch('');
