@@ -1,4 +1,4 @@
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../contexts/UserContext';
@@ -8,7 +8,7 @@ import Error from '../atoms/Error';
 import LogoText from '../../images/logo-text.png';
 
 const SignUp = () => {
-  const { setUserData } = useContext(UserContext);
+  const { setUserData, setIsAuth } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -37,6 +37,13 @@ const SignUp = () => {
       setError(err.response.data.msg);
     }
   };
+
+  // update body color
+  useEffect(() => {
+    setIsAuth(true);
+
+    return () => setIsAuth(false);
+  }, [setIsAuth]);
 
   return (
     <Fragment>

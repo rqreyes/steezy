@@ -15,34 +15,21 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
-  /* html {
-    height: 100%;
-  }
-
-  body,
-  #root,
-  .App {
-    min-height: 100%;
-  } */
-
   body, input {
     font-family: 'Poppins', sans-serif;
     font-size: 14px;
   }
 
   body {
-    /* display: flex;
-    justify-content: center;
-    align-items: center; */
     color: #222;
-    /* background: #222; */
     background: #fff;
   }
 
   main {
     width: 100%;
-    max-width: 80vw;
-    margin: 100px auto 0;
+    max-width: 1140px;
+    padding: 0 10px;
+    margin: 80px auto 40px;
   }
 
   ul {
@@ -61,6 +48,38 @@ const GlobalStyle = createGlobalStyle`
 
   a, button {
     cursor: pointer;
+  }
+
+  ${({ isAuth }) =>
+    isAuth &&
+    `
+    html {
+      height: 100%;
+    }
+
+    body,
+    #root,
+    .App {
+      min-height: 100%;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #222;
+    }
+
+    main {
+      margin: 0;
+    }
+  `}
+
+  /* small devices (landscape phones, 576px and up) */
+  @media (min-width: 576px) {
+    main {
+      margin: 100px auto 40px;
+    }
   }
 `;
 
@@ -102,15 +121,8 @@ const StyledLogin = styled(StyledSignUp)`
 const App = () => {
   const initialUserData = { token: '', user: {} };
   const [userData, setUserData] = useState(initialUserData);
-  // const [userClassData, setUserClassData] = useState({});
-  const [userClassData, setUserClassData] = useState({
-    '5f0bcb7cad9b2a576eb10108': {
-      percentWatched: 50,
-      played: 0.5,
-      ranges: [],
-      timeTotalWatched: 10000,
-    },
-  });
+  const [userClassData, setUserClassData] = useState({});
+  const [isAuth, setIsAuth] = useState(false);
   const clearUserData = () => setUserData(initialUserData);
 
   // update the user class data
@@ -142,7 +154,7 @@ const App = () => {
 
   return (
     <div className='App'>
-      <GlobalStyle />
+      <GlobalStyle isAuth={isAuth} />
       <UserContext.Provider
         value={{
           userData,
@@ -150,6 +162,7 @@ const App = () => {
           clearUserData,
           userClassData,
           updateUserClassData,
+          setIsAuth,
         }}
       >
         <BrowserRouter>

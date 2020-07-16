@@ -11,17 +11,29 @@ import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
+import { useMediaQuery } from 'react-responsive';
 import styled from 'styled-components';
 
 const StyledClassesHeader = styled.section`
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   padding: 0 12px;
+  margin-bottom: 10px;
+
+  /* small devices (landscape phones, 576px and up) */
+  @media (min-width: 576px) {
+    flex-direction: row;
+    margin-bottom: 0;
+  }
 `;
 
 const StyledH2 = styled.h2`
-  margin-right: 40px;
+  /* small devices (landscape phones, 576px and up) */
+  @media (min-width: 576px) {
+    margin-right: 40px;
+  }
 `;
 
 const StyledNotResults = styled.div`
@@ -78,6 +90,7 @@ const StyledSlider2 = styled.section`
       color: #b4b7b7;
       border: 2px solid #b4b7b7;
       border-radius: 6px;
+      cursor: pointer;
     }
   }
 `;
@@ -144,6 +157,24 @@ const ClassList = () => {
     infinite: classList.infinite,
     rows: 3,
     slidesPerRow: 3,
+
+    // breakpoints are in max widths (inclusive)
+    responsive: [
+      {
+        breakpoint: 575,
+        settings: {
+          rows: 3,
+          slidesPerRow: 1,
+        },
+      },
+      {
+        breakpoint: 991,
+        settings: {
+          rows: 4,
+          slidesPerRow: 2,
+        },
+      },
+    ],
   };
   const settings2 = {
     arrows: true,
@@ -157,13 +188,50 @@ const ClassList = () => {
     nextArrow: <NextArrow />,
   };
 
-  // calculate number count
-  const nav2Count = Math.ceil(
-    classList.classes.length / (settings1.rows * settings1.slidesPerRow)
-  );
-  const nav2CountDisplay = [];
-  for (let i = 1; i <= nav2Count; i += 1) {
-    nav2CountDisplay.push(<Fragment key={i}>{i}</Fragment>);
+  // calculate number count responsively
+  const calcNav2Count = (rows, slidesPerRow) => {
+    const nav2Count = Math.ceil(
+      classList.classes.length / (rows * slidesPerRow)
+    );
+    const result = [];
+
+    for (let i = 1; i <= nav2Count; i += 1) {
+      result.push(<Fragment key={i}>{i}</Fragment>);
+    }
+
+    return result;
+  };
+
+  let nav2CountDisplay;
+
+  const isXSmall = useMediaQuery({
+    maxWidth: 575,
+  });
+  const isMedium = useMediaQuery({
+    minWidth: 576,
+    maxWidth: 991,
+  });
+
+  if (isXSmall) {
+    const mediaQuery = settings1.responsive.find(
+      (settings) => settings.breakpoint === 575
+    );
+
+    nav2CountDisplay = calcNav2Count(
+      mediaQuery.settings.rows,
+      mediaQuery.settings.slidesPerRow
+    );
+  } else if (isMedium) {
+    const mediaQuery = settings1.responsive.find(
+      (settings) => settings.breakpoint === 991
+    );
+
+    nav2CountDisplay = calcNav2Count(
+      mediaQuery.settings.rows,
+      mediaQuery.settings.slidesPerRow
+    );
+  } else {
+    nav2CountDisplay = calcNav2Count(settings1.rows, settings1.slidesPerRow);
   }
 
   const classListDisplay =
@@ -204,8 +272,8 @@ const ClassList = () => {
       </Fragment>
     );
 
+  // fetch classes
   useEffect(() => {
-    // fetch classes
     (async () => {
       const classListRes = await axios.get('/class');
       setClassList({
@@ -216,8 +284,8 @@ const ClassList = () => {
     })();
   }, []);
 
+  // initialize sliders
   useEffect(() => {
-    // initialize sliders
     if (slider1.length !== 0 && slider2.length !== 0) {
       setNav1(slider1);
       setNav2(slider2);

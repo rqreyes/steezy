@@ -37,10 +37,9 @@ const StyledFigcaption = styled.figcaption`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 50%;
   height: 100%;
   color: #fff;
-  padding: 14px 0 14px 20px;
+  padding: 14px 20px;
   position: absolute;
   top: 0;
   left: 0;

@@ -1,4 +1,4 @@
-import React, { useContext, useState, Fragment } from 'react';
+import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import UserContext from '../../contexts/UserContext';
@@ -15,7 +15,7 @@ const StyledP = styled.p`
 `;
 
 const Login = () => {
-  const { setUserData } = useContext(UserContext);
+  const { setUserData, setIsAuth } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -44,6 +44,13 @@ const Login = () => {
       setError(err.response.data.msg);
     }
   };
+
+  // update body color
+  useEffect(() => {
+    setIsAuth(true);
+
+    return () => setIsAuth(false);
+  }, [setIsAuth]);
 
   return (
     <Fragment>
