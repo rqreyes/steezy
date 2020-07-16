@@ -239,10 +239,6 @@ const ClassList = () => {
       <StyledNotResults>
         <p>No results were found</p>
       </StyledNotResults>
-    ) : classList.classes.length === 0 ? (
-      <StyledNotResults>
-        <Loading />
-      </StyledNotResults>
     ) : (
       <Fragment>
         <StyledSlider1>
@@ -272,6 +268,9 @@ const ClassList = () => {
       </Fragment>
     );
 
+  // check if loading should display
+  const isLoading = classList.classes.length === 0;
+
   // fetch classes
   useEffect(() => {
     (async () => {
@@ -299,6 +298,7 @@ const ClassList = () => {
         <Search searchClassList={searchClassList} />
       </StyledClassesHeader>
       {classListDisplay}
+      <Loading isLoading={isLoading} />
     </main>
   );
 };
