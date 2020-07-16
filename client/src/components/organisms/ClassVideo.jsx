@@ -1,5 +1,6 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import Slider from 'rc-slider';
@@ -13,6 +14,7 @@ import styled from 'styled-components';
 const StyledMain = styled.main`
   height: calc(100vh - 60px);
   max-width: none;
+  padding: 0;
   margin: 60px 0 0;
   position: relative;
 
