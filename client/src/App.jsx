@@ -102,7 +102,15 @@ const StyledLogin = styled(StyledSignUp)`
 const App = () => {
   const initialUserData = { token: '', user: {} };
   const [userData, setUserData] = useState(initialUserData);
-  const [userClassData, setUserClassData] = useState({});
+  // const [userClassData, setUserClassData] = useState({});
+  const [userClassData, setUserClassData] = useState({
+    '5f0bcb7cad9b2a576eb10108': {
+      percentWatched: 50,
+      played: 0.5,
+      ranges: [],
+      timeTotalWatched: 10000,
+    },
+  });
   const clearUserData = () => setUserData(initialUserData);
 
   // update the user class data

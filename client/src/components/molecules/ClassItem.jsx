@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import UserContext from '../../contexts/UserContext';
 import styled from 'styled-components';
 
 const StyledLink = styled.a`
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 10px;
   margin: 12px;
 `;
 
@@ -17,7 +22,6 @@ const StyledFigure = styled.figure`
     width: 100%;
     height: 100%;
     background: linear-gradient(to right, #222 30%, transparent);
-    border-radius: 10px;
     position: absolute;
     top: 0;
     left: 0;
@@ -26,7 +30,6 @@ const StyledFigure = styled.figure`
 
 const StyledImg = styled.img`
   width: 80%;
-  border-radius: 10px;
   float: right;
 `;
 
@@ -52,8 +55,27 @@ const StyledP = styled.p`
   margin: 0;
 `;
 
+const StyledProgressBar = styled.div`
+  flex: 0 0 auto;
+  height: 10px;
+  background: #444;
+
+  &:before {
+    content: '';
+    display: block;
+    width: ${(props) => props.progressBar};
+    height: 100%;
+    background: #0a78fb;
+  }
+`;
+
 const ClassItem = ({ classItem }) => {
+  const { userClassData } = useContext(UserContext);
   const history = useHistory();
+
+  const progressBar = userClassData[classItem._id]
+    ? `${userClassData[classItem._id]['played'] * 100}%`
+    : 0;
 
   const handleClick = (id) => {
     history.push(`/classes/${id}`, { ...classItem });
@@ -81,6 +103,7 @@ const ClassItem = ({ classItem }) => {
           </div>
         </StyledFigcaption>
       </StyledFigure>
+      <StyledProgressBar progressBar={progressBar} />
     </StyledLink>
   );
 };
