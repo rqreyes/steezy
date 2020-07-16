@@ -125,14 +125,61 @@ const App = () => {
   const [isAuth, setIsAuth] = useState(false);
   const clearUserData = () => setUserData(initialUserData);
 
+  const getMergedRanges = (ranges) => {
+    ranges.sort((a, b) => a[0] - b[0]);
+    const mergedRanges = [ranges[0]];
+
+    ranges.forEach((range) => {
+      const recent = mergedRanges[mergedRanges.length - 1];
+
+      if (range[0] <= recent[1]) recent[1] = Math.max(recent[1], range[1]);
+      else mergedRanges.push(range);
+    });
+
+    return mergedRanges;
+  };
+
+  const getPercentWatched = (ranges, duration) => {
+    return Math.round(
+      (ranges.reduce(
+        (totalSec, range) => (totalSec += Math.abs(range[0] - range[1])),
+        0
+      ) /
+        duration) *
+        100
+    );
+  };
+
   // update the user class data
   const updateUserClassData = (id, classData) => {
     const userClassDataCopy = _.cloneDeep(userClassData);
 
-    userClassDataCopy[id] = Object.assign(
-      userClassDataCopy[id] || {},
-      classData
-    );
+    if (userClassDataCopy[id]) {
+      const videoDataCopy = userClassDataCopy[id];
+      const mergedRangesTotal = getMergedRanges([
+        ...videoDataCopy.ranges,
+        ...classData.ranges,
+      ]);
+
+      videoDataCopy.duration = classData.duration;
+      videoDataCopy.percentWatched = getPercentWatched(
+        mergedRangesTotal,
+        classData.duration
+      );
+      videoDataCopy.played = classData.played;
+      videoDataCopy.ranges = mergedRangesTotal;
+      videoDataCopy.timeTotalWatched += classData.timeTotalWatched;
+    } else {
+      userClassDataCopy[id] = {};
+      userClassDataCopy[id]['duration'] = classData.duration;
+      userClassDataCopy[id]['percentWatched'] = getPercentWatched(
+        classData.ranges,
+        classData.duration
+      );
+      userClassDataCopy[id]['played'] = classData.played;
+      userClassDataCopy[id]['ranges'] = [...classData.ranges];
+      userClassDataCopy[id]['timeTotalWatched'] = classData.timeTotalWatched;
+    }
 
     setUserClassData(userClassDataCopy);
   };

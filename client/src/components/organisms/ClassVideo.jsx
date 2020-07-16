@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import Slider from 'rc-slider';
@@ -58,7 +57,9 @@ const StyledPlayPause = styled.button`
 `;
 
 const ClassVideo = () => {
-  const { setUserData, updateUserClassData } = useContext(UserContext);
+  const { setUserData, userClassData, updateUserClassData } = useContext(
+    UserContext
+  );
   const [settings, setSettings] = useState({
     playing: true,
     played: 0,
@@ -69,6 +70,7 @@ const ClassVideo = () => {
   const [ranges, setRanges] = useState([]);
   const [time1, setTime1] = useState({});
   const history = useHistory();
+  const [videoUrl, setvideoUrl] = useState(history.location.state.videoUrl);
   const { id } = useParams();
   let player1 = [];
   const sliderRef = useRef();
@@ -128,32 +130,11 @@ const ClassVideo = () => {
     const timeTotalWatched = Math.abs(time1 - time2);
 
     updateUserClassData(id, {
-      percentWatched: getPercentWatched(ranges),
+      duration: settings.duration,
       played: settings.played,
       ranges,
       timeTotalWatched,
     });
-  };
-
-  const getPercentWatched = (ranges) => {
-    ranges.sort((a, b) => a[0] - b[0]);
-    const mergedRanges = [ranges[0]];
-
-    ranges.forEach((range) => {
-      const recent = mergedRanges[mergedRanges.length - 1];
-
-      if (range[0] <= recent[1]) recent[1] = Math.max(recent[1], range[1]);
-      else mergedRanges.push(range);
-    });
-
-    return Math.round(
-      (mergedRanges.reduce(
-        (totalSec, range) => (totalSec += Math.abs(range[0] - range[1])),
-        0
-      ) /
-        settings.duration) *
-        100
-    );
   };
 
   const playPauseDisplay = settings.playing ? (
@@ -180,11 +161,21 @@ const ClassVideo = () => {
     })();
   }, [setUserData, history]);
 
-  // initialize start time
   useEffect(() => {
+    // start from where the user left off
+    if (userClassData[id]) {
+      const videoUrl = history.location.state.videoUrl;
+      const videoData = userClassData[id];
+      setvideoUrl(`${videoUrl}?t=${videoData.duration * videoData.played}`);
+    }
+
+    // initialize start time
     const timeStart = new Date();
     setTime1(timeStart);
-  }, []);
+
+    // should only execute once
+    // eslint-disable-next-line
+  }, [history.location.state.videoUrl, id]);
 
   return (
     <StyledMain>
@@ -193,7 +184,7 @@ const ClassVideo = () => {
           player1 = player;
         }}
         className='react-player'
-        url={`${history.location.state.videoUrl}`}
+        url={videoUrl}
         width='100%'
         height='100%'
         playing={settings.playing}
