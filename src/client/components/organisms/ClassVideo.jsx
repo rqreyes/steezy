@@ -168,7 +168,7 @@ const ClassVideo = () => {
       (classEntry) => classEntry.classId === id
     );
 
-    if (userClassEntry[0]) {
+    if (userClassEntry[0] && history.location.state.videoUrl) {
       const videoUrl = history.location.state.videoUrl;
       setvideoUrl(
         `${videoUrl}?t=${userClassEntry[0].duration * userClassEntry[0].played}`

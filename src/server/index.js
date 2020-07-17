@@ -41,17 +41,15 @@ app.listen(process.env.PORT || 8080, () => {
 });
 
 // connect to database
-mongoose.connect(
-  process.env.MONGO_URI,
-  {
+mongoose
+  .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-  },
-  (err) => {
-    if (err) throw err;
-    console.log('Connected to database');
-  }
-);
+  })
+  .catch((err) => {
+    throw err;
+  });
+mongoose.connection.on('connected', () => console.log('Connected to database'));
 
 module.exports = app;
