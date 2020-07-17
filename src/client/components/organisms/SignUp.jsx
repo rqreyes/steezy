@@ -8,7 +8,7 @@ import Error from '../atoms/Error';
 import LogoText from '../../images/logo-text.png';
 
 const SignUp = () => {
-  const { setUserData, setIsAuth } = useContext(UserContext);
+  const { userData, setUserData, setIsAuth } = useContext(UserContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -27,14 +27,15 @@ const SignUp = () => {
       const loginRes = await axios.post('/user/signup', loginUser);
 
       setUserData({
+        ...userData,
         token: loginRes.data.token,
-        user: loginRes.data.user,
+        userId: loginRes.data.userId,
       });
 
       localStorage.setItem('auth-token', loginRes.data.token);
       history.push('/classes');
     } catch (err) {
-      setError(err.response.data.msg);
+      setError(err.response.data.message);
     }
   };
 

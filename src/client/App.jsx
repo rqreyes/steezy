@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import cloneDeep from 'clone-deep';
 import styled, { createGlobalStyle } from 'styled-components';
 import UserContext from './contexts/UserContext';
 import Header from './components/organisms/Header';
@@ -119,9 +118,21 @@ const StyledLogin = styled(StyledSignUp)`
 `;
 
 const App = () => {
-  const initialUserData = { token: '', user: {} };
+  const initialUserData = {
+    token: '',
+    userId: '5f11bb889f787c7295c95b0b',
+    classEntries: [
+      {
+        classId: '5f0bcb7cad9b2a576eb10108',
+        duration: 567,
+        percentWatched: 22,
+        played: 0.6,
+        ranges: [[1, 2]],
+        timeTotalWatched: 43,
+      },
+    ],
+  };
   const [userData, setUserData] = useState(initialUserData);
-  const [userClassData, setUserClassData] = useState({});
   const [isAuth, setIsAuth] = useState(false);
   const clearUserData = () => setUserData(initialUserData);
 
@@ -142,7 +153,7 @@ const App = () => {
   const getPercentWatched = (ranges, duration) => {
     return Math.round(
       (ranges.reduce(
-        (totalSec, range) => (totalSec += Math.abs(range[0] - range[1])),
+        (totalSec, range) => totalSec + Math.abs(range[0] - range[1]),
         0
       ) /
         duration) *
@@ -150,12 +161,15 @@ const App = () => {
     );
   };
 
-  // update the user class data
-  const updateUserClassData = (id, classData) => {
-    const userClassDataCopy = cloneDeep(userClassData);
+  // update the user class entry
+  const updateUserClassEntry = (classId, classData) => {
+    const userClassEntriesCopy = [...userData.classEntries];
+    const userClassEntryCopy = userClassEntriesCopy.filter(
+      (classEntryCopy) => classEntryCopy.classId === classId
+    );
 
-    if (userClassDataCopy[id]) {
-      const videoDataCopy = userClassDataCopy[id];
+    if (userClassEntryCopy[0]) {
+      const videoDataCopy = userClassEntryCopy[0];
       const mergedRangesTotal = getMergedRanges([
         ...videoDataCopy.ranges,
         ...classData.ranges,
@@ -170,18 +184,21 @@ const App = () => {
       videoDataCopy.ranges = mergedRangesTotal;
       videoDataCopy.timeTotalWatched += classData.timeTotalWatched;
     } else {
-      userClassDataCopy[id] = {};
-      userClassDataCopy[id]['duration'] = classData.duration;
-      userClassDataCopy[id]['percentWatched'] = getPercentWatched(
+      const videoDataCopy = {};
+      videoDataCopy.classId = classId;
+      videoDataCopy.duration = classData.duration;
+      videoDataCopy.percentWatched = getPercentWatched(
         classData.ranges,
         classData.duration
       );
-      userClassDataCopy[id]['played'] = classData.played;
-      userClassDataCopy[id]['ranges'] = [...classData.ranges];
-      userClassDataCopy[id]['timeTotalWatched'] = classData.timeTotalWatched;
+      videoDataCopy.played = classData.played;
+      videoDataCopy.ranges = [...classData.ranges];
+      videoDataCopy.timeTotalWatched = classData.timeTotalWatched;
+
+      userClassEntriesCopy.push(videoDataCopy);
     }
 
-    setUserClassData(userClassDataCopy);
+    setUserData({ ...userData, classEntries: userClassEntriesCopy });
   };
 
   // check and verify if user is still logged in
@@ -194,10 +211,15 @@ const App = () => {
           headers: { 'x-auth-token': token },
         });
 
-        if (tokenRes.data) setUserData({ token, user: tokenRes.data });
+        if (tokenRes.data)
+          setUserData({ ...userData, token, userId: tokenRes.data });
       }
     })();
   }, []);
+
+  // useEffect(() => {
+  //   (async () => {})();
+  // }, [userClassData]);
 
   return (
     <div className='App'>
@@ -207,8 +229,7 @@ const App = () => {
           userData,
           setUserData,
           clearUserData,
-          userClassData,
-          updateUserClassData,
+          updateUserClassEntry,
           setIsAuth,
         }}
       >

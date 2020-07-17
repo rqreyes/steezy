@@ -69,11 +69,14 @@ const StyledProgressBar = styled.div`
 `;
 
 const ClassItem = ({ classItem }) => {
-  const { userClassData } = useContext(UserContext);
+  const { userData } = useContext(UserContext);
   const history = useHistory();
 
-  const progressBar = userClassData[classItem._id]
-    ? `${userClassData[classItem._id]['played'] * 100}%`
+  const userClassEntry = userData.classEntries.filter(
+    (classEntry) => classEntry.classId === classItem._id
+  );
+  const progressBar = userClassEntry[0]
+    ? `${userClassEntry[0].played * 100}%`
     : 0;
 
   const handleClick = (id) => {

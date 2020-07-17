@@ -35,13 +35,11 @@ router.post('/signup', async (req, res) => {
     await user.save();
 
     // generate JWT for user
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
     res.json({
       token,
-      user: {
-        id: user._id,
-      },
+      userId: user._id,
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -68,12 +66,14 @@ router.post('/login', async (req, res) => {
     }
 
     // generate JWT for user
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
     res.json({
       token,
       user: {
-        id: user._id,
+        token,
+        userId: user._id,
+        classEnties: user.classEnties,
       },
     });
   } catch (err) {
@@ -86,12 +86,12 @@ router.post('/tokenverify', async (req, res) => {
   try {
     const token = req.header('x-auth-token');
     const verified = token ? jwt.verify(token, process.env.JWT_SECRET) : false;
-    const user = verified ? await User.findById(verified.id) : false;
+    const user = verified ? await User.findById(verified.userId) : false;
 
     // check if token and user are verified
     if (!token || !verified || !user) return res.json(false);
 
-    return res.json({ id: user._id });
+    return res.json({ userId: user._id });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

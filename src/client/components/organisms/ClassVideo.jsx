@@ -57,7 +57,7 @@ const StyledPlayPause = styled.button`
 `;
 
 const ClassVideo = () => {
-  const { setUserData, userClassData, updateUserClassData } = useContext(
+  const { userData, setUserData, updateUserClassEntry } = useContext(
     UserContext
   );
   const [settings, setSettings] = useState({
@@ -129,7 +129,7 @@ const ClassVideo = () => {
     const time2 = new Date();
     const timeTotalWatched = Math.abs(time1 - time2);
 
-    updateUserClassData(id, {
+    updateUserClassEntry(id, {
       duration: settings.duration,
       played: settings.played,
       ranges,
@@ -153,7 +153,8 @@ const ClassVideo = () => {
           headers: { 'x-auth-token': token },
         });
 
-        if (tokenRes.data) setUserData({ token, user: tokenRes.data });
+        if (tokenRes.data)
+          setUserData({ ...userData, token, userId: tokenRes.data.userId });
         else history.push('/login');
       } else {
         history.push('/login');
@@ -163,10 +164,15 @@ const ClassVideo = () => {
 
   useEffect(() => {
     // start from where the user left off
-    if (userClassData[id]) {
+    const userClassEntry = userData.classEntries.filter(
+      (classEntry) => classEntry.classId === id
+    );
+
+    if (userClassEntry[0]) {
       const videoUrl = history.location.state.videoUrl;
-      const videoData = userClassData[id];
-      setvideoUrl(`${videoUrl}?t=${videoData.duration * videoData.played}`);
+      setvideoUrl(
+        `${videoUrl}?t=${userClassEntry[0].duration * userClassEntry[0].played}`
+      );
     }
 
     // initialize start time

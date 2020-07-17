@@ -35,13 +35,14 @@ const Login = () => {
 
       setUserData({
         token: loginRes.data.token,
-        user: loginRes.data.user,
+        userId: loginRes.data.userId,
+        classEntries: loginRes.data.classEntries,
       });
 
       localStorage.setItem('auth-token', loginRes.data.token);
       history.push('/classes');
     } catch (err) {
-      setError(err.response.data.msg);
+      setError(err.response.data.message);
     }
   };
 
