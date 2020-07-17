@@ -44,7 +44,6 @@ router.post('/signup', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-  return null;
 });
 
 router.post('/login', async (req, res) => {
@@ -79,7 +78,6 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-  return null;
 });
 
 router.post('/tokenverify', async (req, res) => {
@@ -95,7 +93,6 @@ router.post('/tokenverify', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
-  return null;
 });
 
 module.exports = router;
