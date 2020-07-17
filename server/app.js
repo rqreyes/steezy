@@ -4,7 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config({ path: __dirname + '/config/.env' });
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
@@ -48,9 +48,14 @@ app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
 });
 
+// server production files
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
 // connect to database
 mongoose.connect(
-  process.env.MONGODB_CONNECTION_STRING,
+  process.env.MONGO_URI,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
