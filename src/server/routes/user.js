@@ -72,7 +72,7 @@ router.post('/login', async (req, res) => {
       user: {
         token,
         userId: user._id,
-        classEnties: user.classEnties,
+        classEntries: user.classEntries,
       },
     });
   } catch (err) {
@@ -90,6 +90,50 @@ router.post('/tokenverify', async (req, res) => {
     if (!token || !verified || !user) return res.json(false);
 
     return res.json({ userId: user._id });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.post('/update', async (req, res) => {
+  try {
+    const {
+      userId,
+      classId,
+      duration,
+      percentWatched,
+      played,
+      ranges,
+      timeTotalWatched,
+    } = req.body;
+    const user = await User.findById(userId);
+
+    // check if class already exists
+    if (user.classEntries.find((entry) => (entry.classId = classId))) {
+      const classEntry = user.classEntries.find(
+        (entry) => (entry.classId = classId)
+      );
+
+      classEntry.percentWatched = percentWatched;
+      classEntry.played = played;
+      classEntry.ranges.push(ranges);
+      classEntry.timeTotalWatched += timeTotalWatched;
+    } else {
+      const newEntry = {};
+
+      newEntry.classId = classId;
+      newEntry.duration = duration;
+      newEntry.percentWatched = percentWatched;
+      newEntry.played = played;
+      newEntry.ranges = ranges;
+      newEntry.timeTotalWatched = timeTotalWatched;
+
+      user.classEntries.push(newEntry);
+    }
+
+    await user.save();
+
+    res.send('Updated user successful');
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
