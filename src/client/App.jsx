@@ -22,6 +22,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     color: #222;
     background: #fff;
+    margin: 0;
   }
 
   main {

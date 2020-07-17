@@ -34,7 +34,7 @@ const Nav = () => {
   };
 
   // display either logout or login buttons
-  const navDisplay = userData.userToken ? (
+  const navDisplay = userData.token ? (
     <StyledNav>
       <Link to='/classes'>
         <StyledLogin type='button' onClick={logout}>
