@@ -219,11 +219,12 @@ const App = () => {
   // store the user class data entry into database
   useEffect(() => {
     (async () => {
-      console.log('userData.userId: ', userData.userId);
-      await axios.post('/user/update', {
-        userId: userData.userId,
-        classEntries: userData.classEntries,
-      });
+      if (userData.userId) {
+        await axios.post('/user/update', {
+          userId: userData.userId,
+          classEntries: userData.classEntries,
+        });
+      }
     })();
   }, [userData]);
 
