@@ -121,17 +121,8 @@ const StyledLogin = styled(StyledSignUp)`
 const App = () => {
   const initialUserData = {
     token: '',
-    userId: '5f11bb889f787c7295c95b0b',
-    classEntries: [
-      {
-        classId: '5f0bcb7cad9b2a576eb10108',
-        duration: 567,
-        percentWatched: 22,
-        played: 0.6,
-        ranges: [[1, 2]],
-        timeTotalWatched: 43,
-      },
-    ],
+    userId: '',
+    classEntries: [],
   };
   const [userData, setUserData] = useState(initialUserData);
   const [isAuth, setIsAuth] = useState(false);
@@ -213,14 +204,26 @@ const App = () => {
         });
 
         if (tokenRes.data)
-          setUserData({ ...userData, token, userId: tokenRes.data });
+          setUserData({
+            ...userData,
+            token,
+            userId: tokenRes.data.userId,
+            classEntries: tokenRes.data.classEntries,
+          });
       }
     })();
   }, []);
 
-  // useEffect(() => {
-  //   (async () => {})();
-  // }, [userClassData]);
+  // update the user class entry
+  useEffect(() => {
+    (async () => {
+      console.log('userData.userId: ', userData.userId);
+      await axios.post('/user/update', {
+        userId: userData.userId,
+        classEntries: userData.classEntries,
+      });
+    })();
+  }, [userData]);
 
   return (
     <div className='App'>
