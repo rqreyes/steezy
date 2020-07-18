@@ -7,6 +7,7 @@ const StyledTime = styled.time`
   color: #fff;
 `;
 
+// format time into 'mm:ss'
 const format = (seconds) => {
   const date = new Date(seconds * 1000);
   const hh = date.getUTCHours();

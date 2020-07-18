@@ -1,20 +1,22 @@
-/* eslint-disable no-unused-vars */
 const createError = require('http-errors');
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config({ path: path.resolve(__dirname, 'config/.env') });
 
-const userRouter = require('./routes/user');
-const classRouter = require('./routes/class');
+// routers
+const userRouter = require('./routes/userRouter');
+const classRouter = require('./routes/classRouter');
 
 const app = express();
 
 app.use(express.json());
 app.use(express.static('dist'));
 
+// endpoints
 app.use('/user', userRouter);
 app.use('/class', classRouter);
+app.use('*', (req, res) => res.redirect('/'));
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

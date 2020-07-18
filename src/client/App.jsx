@@ -128,6 +128,7 @@ const App = () => {
   const [isAuth, setIsAuth] = useState(false);
   const clearUserData = () => setUserData(initialUserData);
 
+  // merge overlapping time ranges of what the user watched
   const getMergedRanges = (ranges) => {
     ranges.sort((a, b) => a[0] - b[0]);
     const mergedRanges = [ranges[0]];
@@ -142,6 +143,7 @@ const App = () => {
     return mergedRanges;
   };
 
+  // calculate the percent of what the user watched
   const getPercentWatched = (ranges, duration) => {
     return Math.round(
       (ranges.reduce(
@@ -153,7 +155,7 @@ const App = () => {
     );
   };
 
-  // update the user class entry
+  // update or create a new user class data entry
   const updateUserClassEntry = (classId, classData) => {
     const userClassEntriesCopy = [...userData.classEntries];
     const userClassEntryCopy = userClassEntriesCopy.filter(
@@ -214,7 +216,7 @@ const App = () => {
     })();
   }, []);
 
-  // update the user class entry
+  // store the user class data entry into database
   useEffect(() => {
     (async () => {
       console.log('userData.userId: ', userData.userId);

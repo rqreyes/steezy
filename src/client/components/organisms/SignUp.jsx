@@ -39,7 +39,7 @@ const SignUp = () => {
     }
   };
 
-  // update body color
+  // update the body color
   useEffect(() => {
     setIsAuth(true);
 

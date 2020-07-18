@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
 
 router.post('/search', async (req, res) => {
   try {
-    // from search, fetch all of the matching classes
+    // from search input, fetch all of the matching classes
     const { search } = req.body;
 
     const classes = await Class.find({

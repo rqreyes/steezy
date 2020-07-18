@@ -1,4 +1,3 @@
-/* eslint no-underscore-dangle: 0 */
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -10,12 +9,12 @@ router.post('/signup', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // check if email or password are missing
+    // if email or password are missing, then send an error
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // check if email already exists
+    // if email already exists, then send an error
     const userExisting = await User.findOne({ email });
     if (userExisting) {
       return res
@@ -27,7 +26,7 @@ router.post('/signup', async (req, res) => {
     const salt = await bcrypt.genSalt();
     const passwordHash = await bcrypt.hash(password, salt);
 
-    // save user into database
+    // store user into database
     const user = new User({
       email,
       password: passwordHash,
@@ -50,12 +49,12 @@ router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // check if email or password are missing
+    // if email or password are missing, then send an error
     if (!email || !password) {
       return res.status(400).json({ message: 'All fields are required' });
     }
 
-    // check if email is registered or if password is a match
+    // if email is registered or if password is a match, then send an error
     const user = await User.findOne({ email });
     const isMatch = user
       ? await bcrypt.compare(password, user.password)
@@ -86,7 +85,7 @@ router.post('/tokenverify', async (req, res) => {
     const verified = token ? jwt.verify(token, process.env.JWT_SECRET) : false;
     const user = verified ? await User.findById(verified.userId) : false;
 
-    // check if token and user are verified
+    // if token and user are not verified, then don't send the user information
     if (!token || !verified || !user) return res.json(false);
 
     return res.json({ userId: user._id, classEntries: user.classEntries });
@@ -100,6 +99,7 @@ router.post('/update', async (req, res) => {
     const { userId, classEntries } = req.body;
     const user = await User.findById(userId);
 
+    // store new merged time ranges into database
     user.classEntries = classEntries;
     await user.save();
 

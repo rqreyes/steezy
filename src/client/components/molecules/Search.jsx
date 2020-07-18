@@ -42,6 +42,7 @@ const StyledButton = styled.button`
 const Search = ({ searchClassList }) => {
   const [search, setSearch] = useState('');
 
+  // send search input to ClassList component
   const searchClass = (evt) => {
     evt.preventDefault();
     searchClassList(search);

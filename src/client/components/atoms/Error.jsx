@@ -31,6 +31,7 @@ const StyledP = styled.p`
   padding: 0 10px;
 `;
 
+// display error in forms
 const Error = ({ error, setError }) => {
   return (
     <StyledError onClick={() => setError('')}>

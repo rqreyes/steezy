@@ -28,12 +28,13 @@ const StyledLogin = styled(StyledButton)`
 const Nav = () => {
   const { userData, clearUserData } = useContext(UserContext);
 
+  // on logout, remove the token
   const logout = () => {
     clearUserData();
     localStorage.removeItem('auth-token');
   };
 
-  // display either logout or login buttons
+  // depending on if they have a token or not, display either logout or login buttons
   const navDisplay = userData.token ? (
     <StyledNav>
       <Link to='/classes'>

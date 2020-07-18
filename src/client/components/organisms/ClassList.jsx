@@ -117,7 +117,7 @@ const ClassList = () => {
   let slider1 = [];
   let slider2 = [];
 
-  // search class
+  // search class video
   const searchClassList = async (search) => {
     try {
       const searchRes = await axios.post('/class/search', { search });
@@ -125,7 +125,7 @@ const ClassList = () => {
       if (searchRes.data.length === 0) {
         setClassList({ ...classList, noResults: true });
       } else {
-        // toggle infinite if number of classes is greater than 5 slides (45 classes)
+        // toggle infinite if number of classes is greater than 5 slides (it's buggy otherwise)
         setClassList({
           classes: searchRes.data,
           infinite:
@@ -139,26 +139,28 @@ const ClassList = () => {
     }
   };
 
+  // scroll left
   const PrevArrow = ({ onClick }) => (
     <StyledArrow type='button' onClick={onClick}>
       <FontAwesomeIcon icon={faChevronLeft} />
     </StyledArrow>
   );
 
+  // scroll right
   const NextArrow = ({ onClick }) => (
     <StyledArrow type='button' onClick={onClick}>
       <FontAwesomeIcon icon={faChevronRight} />
     </StyledArrow>
   );
 
-  // configure slider settings
+  // configure class video slider settings
   const settings1 = {
     arrows: false,
     infinite: classList.infinite,
     rows: 3,
     slidesPerRow: 3,
 
-    // breakpoints are in max widths (inclusive)
+    // adjust grid display with breakpoints (in max widths and inclusive)
     responsive: [
       {
         breakpoint: 575,
@@ -176,6 +178,8 @@ const ClassList = () => {
       },
     ],
   };
+
+  // configure pagination slider settings
   const settings2 = {
     arrows: true,
     centerMode: true,
@@ -188,7 +192,7 @@ const ClassList = () => {
     nextArrow: <NextArrow />,
   };
 
-  // calculate number count responsively
+  // adjust pagination number count based on viewport width
   const calcNav2Count = (rows, slidesPerRow) => {
     const nav2Count = Math.ceil(
       classList.classes.length / (rows * slidesPerRow)
@@ -204,10 +208,13 @@ const ClassList = () => {
 
   let nav2CountDisplay;
 
+  // extra small devices (portrait phones, 576px and down)
   const isXSmall = useMediaQuery({
     maxWidth: 575,
   });
-  const isMedium = useMediaQuery({
+
+  // small devices (landscape phones, 576px and up)
+  const isSmall = useMediaQuery({
     minWidth: 576,
     maxWidth: 991,
   });
@@ -221,7 +228,7 @@ const ClassList = () => {
       mediaQuery.settings.rows,
       mediaQuery.settings.slidesPerRow
     );
-  } else if (isMedium) {
+  } else if (isSmall) {
     const mediaQuery = settings1.responsive.find(
       (settings) => settings.breakpoint === 991
     );
@@ -268,7 +275,7 @@ const ClassList = () => {
       </Fragment>
     );
 
-  // check if loading should display
+  // if no classes are loaded, then display the loading screen
   const isLoading = classList.classes.length === 0;
 
   // fetch classes
@@ -283,7 +290,7 @@ const ClassList = () => {
     })();
   }, []);
 
-  // initialize sliders
+  // connect class list and pagination sliders together
   useEffect(() => {
     if (slider1.length !== 0 && slider2.length !== 0) {
       setNav1(slider1);

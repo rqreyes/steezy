@@ -75,6 +75,7 @@ const ClassVideo = () => {
   let player1 = [];
   const sliderRef = useRef();
 
+  // video actions
   const handlePlay = () => {
     handleRangeStart(sliderRef.current.state.value * settings.duration);
     setSettings({ ...settings, playing: true });
@@ -112,10 +113,12 @@ const ClassVideo = () => {
     setSettings({ ...settings, duration });
   };
 
+  // track where user started
   const handleRangeStart = (playStart) => {
     setRanges([...ranges, [Math.floor(playStart)]]);
   };
 
+  // track where user ended
   const handleRangeEnd = (playEnd) => {
     const rangeCopy = [...ranges];
 
@@ -137,6 +140,7 @@ const ClassVideo = () => {
     });
   };
 
+  // toggle pause and play
   const playPauseDisplay = settings.playing ? (
     <FontAwesomeIcon icon={faPause} />
   ) : (
@@ -163,7 +167,7 @@ const ClassVideo = () => {
   }, [setUserData, history]);
 
   useEffect(() => {
-    // start from where the user left off
+    // play video from where the user left off
     const userClassEntry = userData.classEntries.filter(
       (classEntry) => classEntry.classId === id
     );
@@ -180,7 +184,6 @@ const ClassVideo = () => {
     setTime1(timeStart);
 
     // should only execute once
-    // eslint-disable-next-line
   }, [history.location.state.videoUrl, id]);
 
   return (

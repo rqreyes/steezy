@@ -72,6 +72,7 @@ const ClassItem = ({ classItem }) => {
   const { userData } = useContext(UserContext);
   const history = useHistory();
 
+  // if the user has played the video before, then display its progress bar
   const userClassEntry = userData.classEntries.filter(
     (classEntry) => classEntry.classId === classItem._id
   );
@@ -79,6 +80,7 @@ const ClassItem = ({ classItem }) => {
     ? `${userClassEntry[0].played * 100}%`
     : 0;
 
+  // route to the class video
   const handleClick = (id) => {
     history.push(`/classes/${id}`, { ...classItem });
   };
