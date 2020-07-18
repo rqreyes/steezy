@@ -107,14 +107,13 @@ Best of luck and happy coding!
 2. Configure database in the cloud or locally
 3. Clone the repository
 4. Go inside the directory
-5. Install dependencies
+5. Install dependencies:
    `npm install`
-6. Create .env file that stores MongoDB connection string
-7. Start development server:
+6. Start development server:
    `npm run dev`
-8. Build for production:
+7. Build for production:
    `npm run build`
-9. Start production server:
+8. Start production server:
    `npm run start`
 
 ## Assumptions
