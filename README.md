@@ -105,16 +105,16 @@ Best of luck and happy coding!
 
 1. Clone the repository
 2. Go inside the directory
-3. Install dependences
+3. Install dependences:
    `npm install`
 
-4. Start development server
+4. Start development server:
    `npm run dev`
 
-5. Build for production
+5. Build for production:
    `npm run build`
 
-6. Start production server
+6. Start production server:
    `npm run start`
 
 ## Assumptions
@@ -124,9 +124,11 @@ Please list any assumptions or extra requirements you added to the application w
 - React Slick (class video carousel) contains a bug with centering the pagination numbers, so I had to directly edit the npm package
 - React Slick still uses depracated lifecycle hooks, so relative console errors may appear
 - Accounts for the time watched when the user pauses or seeks another location in the video
-- Set up a route where if an unauthenticated user clicks on a video, then take them to the login page, and then take them to the video directly
+- Assumes that the user doesn't search for the term "sandstorm", unless they want to discover the hidden **easter egg**
+
 - If I had more time, I would employ the following:
-  - Account for the time watched when the user exists the video player (unable to access updated state on unmount with hooks)
+  - Set up a route where if an unauthenticated user clicks on a video, then take them to the login page, and then take the authenticated user to the video directly
+  - Account for the time watched when the user exits the video player (unable to access updated state on unmount with hooks)
   - Write tests with Jest and Enzyme
   - Convert code into TypeScript
   - Set up Travis CI for continuous integration
