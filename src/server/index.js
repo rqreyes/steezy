@@ -39,7 +39,7 @@ app.use((err, req, res, next) => {
 
 // port listener
 app.listen(process.env.PORT || 8080, () => {
-  console.log(`Listening on port ${process.env.PORT || 8080}!`);
+  console.log(`Listening on port ${process.env.PORT || 8080}`);
 });
 
 // connect to database

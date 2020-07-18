@@ -17,10 +17,6 @@ const StyledHeader = styled.header`
   z-index: 1;
 
   > a,
-  img {
-    height: 60px;
-  }
-
   h1 {
     margin: 0;
     text-indent: -9999px;

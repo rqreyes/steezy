@@ -11,6 +11,17 @@ const StyledNav = styled.nav`
     display: flex;
     align-items: center;
   }
+
+  img {
+    height: 40px;
+  }
+
+  /* small devices (landscape phones, 576px and up) */
+  @media (min-width: 576px) {
+    img {
+      height: 60px;
+    }
+  }
 `;
 
 const StyledDiv = styled.div`

@@ -87,7 +87,8 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const StyledSignUp = styled.main`
-  width: 392px;
+  width: 90vw;
+  max-width: 392px;
   background: #fff;
   padding: 24px;
   border-radius: 5px;
