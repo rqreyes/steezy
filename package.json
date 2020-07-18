@@ -4,11 +4,12 @@
   "description": "",
   "main": "src/server/index.js",
   "scripts": {
-    "build": "npm install --only=dev && webpack --mode production",
-    "start": "npm run build && node src/server/index.js",
+    "build": "webpack --mode production",
+    "start": "node src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "server": "nodemon src/server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "postinstall": "npm run build"
   },
   "author": "",
   "license": "ISC",
