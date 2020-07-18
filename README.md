@@ -103,19 +103,18 @@ Best of luck and happy coding!
 
 ## How to Run
 
-1. Clone the repository
-2. Go inside the directory
-3. Install dependences:
+1. Download database from db folder
+2. Configure database in the cloud or locally
+3. Clone the repository
+4. Go inside the directory
+5. Install dependencies
    `npm install`
-4. Ask Randy for database access (on MongoDB Atlas)
-5. Create .env file that stores MongoDB connection string
-6. Start development server:
+6. Create .env file that stores MongoDB connection string
+7. Start development server:
    `npm run dev`
-
-7. Build for production:
+8. Build for production:
    `npm run build`
-
-8. Start production server:
+9. Start production server:
    `npm run start`
 
 ## Assumptions
