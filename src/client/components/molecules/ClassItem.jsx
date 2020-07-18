@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import UserContext from '../../contexts/UserContext';
 import styled from 'styled-components';
+import UserContext from '../../contexts/UserContext';
 
 const StyledLink = styled.a`
   flex: 1;

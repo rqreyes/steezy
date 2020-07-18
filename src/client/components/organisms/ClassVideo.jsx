@@ -3,12 +3,12 @@ import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import Slider from 'rc-slider';
-import UserContext from '../../contexts/UserContext';
-import Duration from '../atoms/Duration';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import 'rc-slider/assets/index.css';
 import styled from 'styled-components';
+import UserContext from '../../contexts/UserContext';
+import Duration from '../atoms/Duration';
 
 const StyledMain = styled.main`
   height: calc(100vh - 60px);

@@ -2,12 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import styled, { createGlobalStyle } from 'styled-components';
+import EasterEggContextProvider from './contexts/EasterEggContext';
 import UserContext from './contexts/UserContext';
 import Header from './components/organisms/Header';
 import SignUp from './components/organisms/SignUp';
 import Login from './components/organisms/Login';
 import ClassList from './components/organisms/ClassList';
 import ClassVideo from './components/organisms/ClassVideo';
+import EasterEgg from './components/organisms/EasterEgg';
+import './styles/styles.scss';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -230,39 +233,42 @@ const App = () => {
 
   return (
     <div className='App'>
-      <GlobalStyle isAuth={isAuth} />
-      <UserContext.Provider
-        value={{
-          userData,
-          setUserData,
-          clearUserData,
-          updateUserClassEntry,
-          setIsAuth,
-        }}
-      >
-        <BrowserRouter>
-          <Header />
-          <Switch>
-            <Route path='/signup'>
-              <StyledSignUp>
-                <SignUp />
-              </StyledSignUp>
-            </Route>
-            <Route path='/login'>
-              <StyledLogin>
-                <Login />
-              </StyledLogin>
-            </Route>
-            <Route path='/classes/:id'>
-              <ClassVideo />
-            </Route>
-            <Route path='/classes'>
-              <ClassList />
-            </Route>
-            <Redirect from='/' to='/classes' />
-          </Switch>
-        </BrowserRouter>
-      </UserContext.Provider>
+      <EasterEggContextProvider>
+        <EasterEgg />
+        <GlobalStyle isAuth={isAuth} />
+        <UserContext.Provider
+          value={{
+            userData,
+            setUserData,
+            clearUserData,
+            updateUserClassEntry,
+            setIsAuth,
+          }}
+        >
+          <BrowserRouter>
+            <Header />
+            <Switch>
+              <Route path='/signup'>
+                <StyledSignUp>
+                  <SignUp />
+                </StyledSignUp>
+              </Route>
+              <Route path='/login'>
+                <StyledLogin>
+                  <Login />
+                </StyledLogin>
+              </Route>
+              <Route path='/classes/:id'>
+                <ClassVideo />
+              </Route>
+              <Route path='/classes'>
+                <ClassList />
+              </Route>
+              <Redirect from='/' to='/classes' />
+            </Switch>
+          </BrowserRouter>
+        </UserContext.Provider>
+      </EasterEggContextProvider>
     </div>
   );
 };

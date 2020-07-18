@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
 import Button from '../atoms/Button';
-import styled from 'styled-components';
 
 const StyledNav = styled.nav`
   display: flex;

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
-import Input from '../atoms/Input';
+import React, { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { EasterEggContext } from '../../contexts/EasterEggContext';
+import Input from '../atoms/Input';
 
 const StyledForm = styled.form`
   display: flex;
@@ -40,11 +41,18 @@ const StyledButton = styled.button`
 `;
 
 const Search = ({ searchClassList }) => {
+  const { updateEasterEgg } = useContext(EasterEggContext);
   const [search, setSearch] = useState('');
 
   // send search input to ClassList component
   const searchClass = (evt) => {
     evt.preventDefault();
+    if (search === 'sandstorm') {
+      updateEasterEgg();
+      setSearch('');
+      return;
+    }
+
     searchClassList(search);
     setSearch('');
   };

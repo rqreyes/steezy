@@ -1,11 +1,11 @@
 import React from 'react';
-import Button from './Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faExclamationTriangle,
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import Button from './Button';
 
 const StyledError = styled.div`
   display: flex;

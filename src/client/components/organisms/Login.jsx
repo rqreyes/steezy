@@ -1,12 +1,12 @@
 import React, { useContext, useState, useEffect, Fragment } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import LogoText from '../../images/logo-text.png';
+import styled from 'styled-components';
 import UserContext from '../../contexts/UserContext';
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
 import Error from '../atoms/Error';
-import LogoText from '../../images/logo-text.png';
-import styled from 'styled-components';
 
 const StyledP = styled.p`
   && {
