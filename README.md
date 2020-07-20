@@ -122,7 +122,7 @@ Please list any assumptions or extra requirements you added to the application w
 
 - React Slick (class video carousel) contains a bug with centering the pagination numbers, so I had to directly edit the npm package
 - React Slick still uses depracated lifecycle hooks, so relative console errors may appear
-- Accounts for the time watched when the user pauses or seeks another location in the video
+- Accounts for the time watched when the user pauses or seeks another location in the video in milliseconds
 - Assumes that the user doesn't search for the term "sandstorm", unless they want to discover the hidden **easter egg**
 
 - If I had more time, I would employ the following:
